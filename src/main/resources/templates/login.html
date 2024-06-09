@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>로그인</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f4f4f4;
+        }
+        h1 {
+            margin-bottom: 20px;
+        }
+        .form-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        input {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        button {
+            background-color: #007BFF;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .message {
+            margin-top: 15px;
+            font-size: 16px;
+            color: #ff0000;
+        }
+    </style>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('#loginForm').on('submit', function(e) {
+                e.preventDefault();
+
+                const username = $('input[name="username"]').val();
+                const password = $('input[name="password"]').val();
+
+                $.ajax({
+                    type: 'POST',
+                    url: '/login',
+                    data: JSON.stringify({ username: username, password: password }),
+                    contentType: 'application/json',
+                    success: function(response) {
+                        window.location.href = '/';
+                    },
+                    error: function(xhr, status, error) {
+                        $('.message').text('로그인 실패. 다시 시도해주세요.');
+                    }
+                });
+            });
+        });
+    </script>
+</head>
+<body>
+<h1>로그인</h1>
+<div class="form-container">
+    <form id="loginForm">
+        <input type="text" name="username" placeholder="아이디" required>
+        <input type="password" name="password" placeholder="패스워드" required>
+        <button type="submit">로그인</button>
+    </form>
+    <div class="message"></div>
+</div>
+</body>
+</html>

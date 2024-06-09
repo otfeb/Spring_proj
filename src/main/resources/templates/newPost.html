@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Write a New Post</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            background-color: #f4f4f4;
+        }
+        h1 {
+            text-align: center;
+        }
+        form {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        input[type="text"],
+        textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        button {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        button.cancel {
+            background-color: #6c757d;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        button.cancel:hover {
+            background-color: #495057;
+        }
+    </style>
+</head>
+<body>
+<h1>Write a New Post</h1>
+<form id="postForm">
+    <label for="name">작성자</label>
+    <input type="text" id="name" name="name" required>
+
+    <label for="title">제목</label>
+    <input type="text" id="title" name="title" required>
+
+    <label for="title">비밀번호</label>
+    <input type="password" id="password" name="password" required>
+
+    <label for="content">내용</label>
+    <textarea id="content" name="content" rows="6" required></textarea>
+
+    <button type="button" id="submitBtn">작성하기</button>
+    <button type="button" class="cancel" onclick="window.history.back()">Cancel</button>
+</form>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $("#submitBtn").click(function() {
+            var formData = {
+                name: $("#name").val(),
+                title: $("#title").val(),
+                password: $("#password").val(),
+                content: $("#content").val()
+            };
+
+            $.ajax({
+                type: "POST",
+                contentType: "application/json",
+                url: "/board",
+                data: JSON.stringify(formData),
+                dataType: "json",
+                success: function(result) {
+                    // 성공적으로 처리되었을 때의 동작
+                    console.log("게시물이 성공적으로 작성되었습니다.");
+                    // 원하는 동작 추가
+                    window.location.href = "/";
+                },
+                error: function(e) {
+                    // 오류가 발생했을 때의 동작
+                    console.log("오류가 발생했습니다: ", e);
+                    // 원하는 동작 추가
+                }
+            });
+        });
+    });
+</script>
+</body>
+</html>

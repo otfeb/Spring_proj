@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Board Posts</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f4f4f4;
+        }
+        h1 {
+            margin-bottom: 50px;
+        }
+        .button-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .button-container a,
+        .button-container button {
+            text-decoration: none;
+            color: white;
+            background-color: #007BFF;
+            padding: 15px 30px;
+            margin: 10px;
+            border-radius: 5px;
+            font-size: 18px;
+            transition: background-color 0.3s ease;
+            border: none;
+            cursor: pointer;
+        }
+        .button-container a:hover,
+        .button-container button:hover {
+            background-color: #0056b3;
+        }
+        .login-container {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+        }
+        .login-container a {
+            text-decoration: none;
+            color: white;
+            background-color: #28a745;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+        }
+        .login-container a:hover {
+            background-color: #218838;
+        }
+        .post-list {
+            margin-top: 20px;
+            width: 80%;
+        }
+        .post-list ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        .post-list li {
+            background-color: #fff;
+            margin: 10px 0;
+            padding: 15px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .author {
+            font-weight: bold;
+        }
+    </style>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $.ajax({
+                url: '/board',
+                type: 'GET',
+                success: function(data) {
+                    var postList = $('#postList');
+                    postList.empty();
+                    data.forEach(function(post) {
+                        var postItem = '<li>';
+                        postItem += '<span class="author">작성자: ' + post.name + '</span>';
+                        postItem += '<strong>' + post.title + '</strong><br>';
+                        postItem += post.content + '<br>';
+                        postItem += '</li>';
+
+                        postList.append(postItem);
+                    });
+                },
+                error: function(error) {
+                    console.log('Error:', error);
+                }
+            });
+        });
+    </script>
+</head>
+<body>
+<div class="button-container">
+    <a href="/">메인페이지로</a>
+</div>
+<h1>게시판 목록</h1>
+<div class="post-list">
+    <ul id="postList"></ul>
+</div>
+</body>
+</html>
