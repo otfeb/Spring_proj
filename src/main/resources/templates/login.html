@@ -65,7 +65,7 @@
 
                 $.ajax({
                     type: 'POST',
-                    url: '/login',
+                    url: '/user/login',
                     data: JSON.stringify({ username: username, password: password }),
                     contentType: 'application/json',
                     success: function(response) {

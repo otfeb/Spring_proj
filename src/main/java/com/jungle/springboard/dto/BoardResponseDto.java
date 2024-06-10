@@ -15,10 +15,9 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public class BoardResponseDto {
     private Long id;
-    private String name;
+    private String username;
     private String title;
     private String content;
-    private String password;
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime createdAt;
@@ -26,10 +25,9 @@ public class BoardResponseDto {
     public static BoardResponseDto of(Board board) {
         return BoardResponseDto.builder()
                 .id(board.getId())
-                .name(board.getName())
+                .username(board.getUser().getUsername())
                 .title(board.getTitle())
                 .content(board.getContent())
-                .password(board.getPassword())
                 .createdAt(board.getCreatedAt())
                 .build();
     }

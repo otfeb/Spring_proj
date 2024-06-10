@@ -11,7 +11,9 @@ import lombok.*;
 @AllArgsConstructor
 public class User {
 
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(nullable = false, name = "member_id")
     private Long id;
 
     @Column(nullable = false, unique = true)
@@ -23,4 +25,7 @@ public class User {
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private UserRole role;
+
+//    private String role;
+
 }

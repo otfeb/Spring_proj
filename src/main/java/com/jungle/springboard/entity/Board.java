@@ -17,10 +17,11 @@ import java.time.LocalDateTime;
 public class Board {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(nullable = false, name = "user_id")
     private Long id;
 
-    @Column(nullable = false)
-    private String name;
+//    @Column(nullable = false)
+//    private String username;
 
     @Column(nullable = false)
     private String title;
@@ -28,17 +29,16 @@ public class Board {
     @Column(nullable = false)
     private String content;
 
-    @Column(nullable = false)
-    private String password;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "member_id")
+    private User user;
 
     @CreatedDate
     private LocalDateTime createdAt;
 
     public void update(BoardRequestDto boardRequestDto){
-        this.name = boardRequestDto.getName();
         this.title = boardRequestDto.getTitle();
         this.content = boardRequestDto.getContent();
-        this.password = boardRequestDto.getPassword();
     }
 
 }
